@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogger Clone - Create & Share</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <h1><i class="fas fa-blog"></i> Blogger<span>Clone</span></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('create')">Create Post</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                </ul>
+            </nav>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search posts...">
+                <button onclick="searchPosts()"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- HOME PAGE -->
+        <div id="homePage" class="page active">
+            <!-- Featured Section -->
+            <section class="featured-section">
+                <h2 class="section-title">Latest Posts</h2>
+                <div class="posts-grid" id="postsContainer">
+                    <!-- Posts will be loaded here dynamically -->
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="categories-section" id="categories">
+                <h2 class="section-title">Browse by Category</h2>
+                <div class="categories-grid">
+                    <div class="category-card" onclick="filterByCategory('Technology')">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Technology</h3>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('Lifestyle')">
+                        <i class="fas fa-heart"></i>
+                        <h3>Lifestyle</h3>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('Business')">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Business</h3>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('Travel')">
+                        <i class="fas fa-plane"></i>
+                        <h3>Travel</h3>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CREATE POST PAGE -->
+        <div id="createPage" class="page">
+            <section class="create-post-section">
+                <h2 class="section-title">Create New Post</h2>
+                <form id="postForm" class="post-form">
+                    <div class="form-group">
+                        <label for="postTitle">Post Title</label>
+                        <input type="text" id="postTitle" required placeholder="Enter post title...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postCategory">Category</label>
+                        <select id="postCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Lifestyle">Lifestyle</option>
+                            <option value="Business">Business</option>
+                            <option value="Travel">Travel</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postExcerpt">Short Description</label>
+                        <input type="text" id="postExcerpt" required placeholder="Brief description (1-2 sentences)...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postContent">Post Content</label>
+                        <div class="toolbar">
+                            <button type="button" onclick="formatText('bold')"><i class="fas fa-bold"></i></button>
+                            <button type="button" onclick="formatText('italic')"><i class="fas fa-italic"></i></button>
+                            <button type="button" onclick="formatText('underline')"><i class="fas fa-underline"></i></button>
+                            <button type="button" onclick="formatText('insertUnorderedList')"><i class="fas fa-list-ul"></i></button>
+                            <button type="button" onclick="formatText('insertOrderedList')"><i class="fas fa-list-ol"></i></button>
+                        </div>
+                        <div id="postContent" class="rich-editor" contenteditable="true" required placeholder="Write your post content here..."></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Publish Post
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i> Clear
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- BLOG POST PAGE -->
+        <div id="blogPage" class="page">
+            <article class="blog-post" id="blogPostContent">
+                <!-- Blog post content will be loaded here -->
+            </article>
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <h3 class="section-title">Comments (<span id="commentCount">0</span>)</h3>
+                
+                <!-- Comment Form -->
+                <form id="commentForm" class="comment-form">
+                    <div class="form-group">
+                        <input type="text" id="commenterName" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="commentText" required placeholder="Write a comment..." rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-comment"></i> Post Comment
+                    </button>
+                </form>
+
+                <!-- Comments List -->
+                <div class="comments-list" id="commentsList">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Blogger Clone</h3>
+                    <p>A functional blogging platform to create, share, and discuss ideas.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#" onclick="filterByCategory('Technology')">Technology</a></li>
+                        <li><a href="#" onclick="filterByCategory('Lifestyle')">Lifestyle</a></li>
+                        <li><a href="#" onclick="filterByCategory('Business')">Business</a></li>
+                        <li><a href="#" onclick="filterByCategory('Travel')">Travel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Blogger Clone. Educational Project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
